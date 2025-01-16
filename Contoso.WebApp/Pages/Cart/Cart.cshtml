@@ -1,0 +1,41 @@
+@page "/Cart"
+@model CartModel
+
+
+@if (Model.OrderItems.Count == 0)
+{
+    <p>Your cart is empty.</p>
+}
+else
+{
+    <h2>Your Cart</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+    using System.Security.Cryptography;
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.OrderItems)
+            {
+                <tr>
+                    <td>@item.Product.Name"</td>
+                    <td>@item.Quantity</td>
+                    <td>@(item.Price * item.Quantity) €</td> 
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2"><strong>Total:</strong></td>
+                <td><strong>@(Model.OrderItems.Sum(item => item.Price * item.Quantity)) €</strong></td>
+            </tr>
+        </tfoot>
+    </table>
+    <form method="post" asp-page-handler="Checkout">
+        <button type="submit" class="btn btn-primary">Proceed to Checkout</button>
+    </form>
+}

@@ -1,0 +1,26 @@
+@page "/Product/{id:int}"
+@model ProductModel
+@{
+    ViewData["Title"] = "Product";
+} 
+
+@if (Model.Product != null)
+{
+    <div class="product-card">
+        
+        <img src="~/images/@Model.Product.ImageUrl" alt="@Model.Product.Name" class="product-image" />
+        <div class="product-info">
+            <h2>@Model.Product.Name</h2>
+            <p>@Model.Product.Description</p>
+            <p>Price: @Model.Product.Price.ToString("C")</p>
+            <form method="post" asp-page-handler="AddToCart">
+                <input type="hidden" name="productId" value="@Model.Product.Id" />
+                <button type="submit" class="btn btn-success">Add to Cart</button>
+            </form>
+        </div>
+    </div>
+}
+else
+{
+    <p>No product found.</p>
+}

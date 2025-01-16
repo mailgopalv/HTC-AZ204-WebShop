@@ -1,0 +1,36 @@
+.product-card {
+    display: flex;
+    flex-direction: row; /* Change to row to place items in columns */
+    align-items: center; /* Align items to the start of the container */
+    justify-content: center; /* Center items horizontally */
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%; /* Increase max-width to accommodate two columns */
+    margin: auto;
+}
+
+.product-image {
+    max-width: 200px; 
+    max-height: 200px;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.product-info {
+    flex: 1; /* Allow product info to take up the remaining space */
+    text-align: left; /* Align text to the left */
+}
+
+.product-info h2 {
+    margin-bottom: 10px;
+}
+
+.product-info p {
+    margin-bottom: 10px;
+}
+
+.btn {
+    margin-top: 10px;
+}

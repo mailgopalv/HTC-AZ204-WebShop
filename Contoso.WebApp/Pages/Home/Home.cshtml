@@ -1,0 +1,40 @@
+@page "/Home"
+@model HomeModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+
+<h2 class="title">Products</h2>
+
+@if (Model.Products != null && Model.Products.Any())
+{
+    <div class="product-grid">
+        @foreach (var product in Model.Products)
+        {
+            <div class="product-card">
+                <h3>@product.Name</h3> 
+                @if (!string.IsNullOrEmpty(product.ImageUrl))
+                {
+                    <img src="~/images/@product.ImageUrl" alt="@product.Name" class="product-image"/>
+                }
+                <p>Price: @product.Price.ToString("C")</p>
+                 <form method="post" asp-page-handler="ImageClick">
+                        <input type="hidden" name="productId" value="@product.Id" />
+                        <button type="submit" class="product-button">
+                            View Details
+                        </button>
+                </form>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>No products available.</p>
+}
+
+@if (Model.ErrorMessage != null)
+{
+    <p>@Model.ErrorMessage</p>
+}
