@@ -11,6 +11,7 @@ public class CartModel : PageModel
 
     public string ErrorMessage { get; set; }
 
+    public string SuccessMessage { get; set; }
 
     public CartModel(IContosoAPI contosoAPI)
     {
@@ -20,6 +21,12 @@ public class CartModel : PageModel
     public async Task OnGetAsync()
     {
         LoadOrderItemsFromSession();
+
+        if (HttpContext.Session.Get<string>("SuccessMessage") != null)
+        {
+            SuccessMessage = HttpContext.Session.Get<string>("SuccessMessage") ?? string.Empty;
+            HttpContext.Session.Remove("SuccessMessage");
+        }
     }
 
     public async Task<IActionResult> OnPostCheckoutAsync(int id)
@@ -43,7 +50,9 @@ public class CartModel : PageModel
 
         HttpContext.Session.Remove("OrderItems");
 
-        return RedirectToPage("/Home/Home");
+        HttpContext.Session.Set("SuccessMessage", "Order submitted successfully. Thank you!");
+
+        return RedirectToPage();
     }
 
     private void LoadOrderItemsFromSession()
@@ -54,7 +63,5 @@ public class CartModel : PageModel
             OrderItems = new List<OrderItemDto>();
             ErrorMessage = "Your cart is empty.";
         }
-    }
-
-        
+    }     
 }

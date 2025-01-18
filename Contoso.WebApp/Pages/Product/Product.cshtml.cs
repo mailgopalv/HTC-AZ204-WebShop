@@ -12,6 +12,8 @@ public class ProductModel : PageModel
 
     public string ErrorMessage { get; set; }
 
+    public string SuccessMessage { get; set; }
+
 
     public ProductModel(IContosoAPI contosoAPI)
     {
@@ -25,6 +27,12 @@ public class ProductModel : PageModel
         if (!response.IsSuccessStatusCode)
         {
             ErrorMessage = "Failed to retrieve product";
+        }
+
+        if (HttpContext.Session.Get<string>("SuccessMessage") != null)
+        {
+            SuccessMessage = HttpContext.Session.Get<string>("SuccessMessage") ?? string.Empty;
+            HttpContext.Session.Remove("SuccessMessage");
         }
 
         Product = response.Content;
@@ -66,6 +74,8 @@ public class ProductModel : PageModel
         }
 
         HttpContext.Session.Set("OrderItems", orderItems);
+
+        HttpContext.Session.Set("SuccessMessage", "Product added to cart");
 
         return RedirectToPage(new { id });
     }
