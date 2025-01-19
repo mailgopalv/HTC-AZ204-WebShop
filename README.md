@@ -8,6 +8,8 @@ A SmartWebShop application built with ASP .NET Technology. The frontend is an AS
 - [Usage](#usage)
 - [Frontend Screens](#frontend-screens)
 - [Backend API](#backend-api)
+- [Setting up User Secrets](#setting-up-user-secrets)
+
 
 ## Installation
 
@@ -58,5 +60,30 @@ he API has the following controllers:
 - `/api/Order` - Create, get one, get all orders
 - `/api/Product` - CRUD for products
 - `/api/Account` - Login, Register
+
+## Setting up User Secrets
+
+To securely store sensitive information such as connection strings, you can use the `dotnet user-secrets` tool. Follow the steps below to set up user secrets for the project:
+
+1. Navigate to the backend project directory:
+
+    ```bash
+    cd ../Contoso.Api
+    ```
+
+2. Initialize user secrets for the project:
+
+    ```bash
+    dotnet user-secrets init
+    ```
+
+3. Set the connection string as a user secret:
+
+    ```bash
+    dotnet user-secrets set "ConnectionStrings:DefaultConnection" "YOUR_CONNECTION_STRING_FOR_SQL_SERVER"
+    ```
+
+By using user secrets, you ensure that sensitive information is not hard-coded in your source code and is kept secure.
+
 
 
