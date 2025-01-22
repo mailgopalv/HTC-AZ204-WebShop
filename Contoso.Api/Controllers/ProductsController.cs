@@ -8,7 +8,6 @@ namespace Contoso.Api.Controllers;
 
 [ApiController]
 [Route("/api/[controller]")]
-[Authorize]
 public class ProductsController : ControllerBase
 {
     private readonly IProductsService _productService;
@@ -18,20 +17,25 @@ public class ProductsController : ControllerBase
         _productService = productService;
     }
 
-    [HttpGet]
-    public async Task<IEnumerable<ProductDto>> GetProductsAsync()
+    [HttpPost]
+    public async Task<PagedResult<ProductDto>> GetProductsAsync(QueryParameters queryParameters)
     {
-
-        return await _productService.GetProductsAsync();
+        return await _productService.GetProductsAsync(queryParameters);
     }
 
+    [HttpGet("categories")]
+    public async Task<List<string>> GetProductCategories()
+    {
+        return await _productService.GetProductCategories();
+    }
+    
     [HttpGet("{id}")]
     public async Task<ProductDto> GetProductAsync(int id)
     {
         return await _productService.GetProductAsync(id);
     }
 
-    [HttpPost]
+    [HttpPost("create")]
     public async Task<ProductDto> CreateProductAsync(ProductDto product)
     {
         return await _productService.CreateProductAsync(product);

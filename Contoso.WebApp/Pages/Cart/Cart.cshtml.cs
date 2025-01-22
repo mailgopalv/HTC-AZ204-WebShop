@@ -27,6 +27,12 @@ public class CartModel : PageModel
             SuccessMessage = HttpContext.Session.Get<string>("SuccessMessage") ?? string.Empty;
             HttpContext.Session.Remove("SuccessMessage");
         }
+
+        if (HttpContext.Session.Get<string>("ErrorMessage") != null)
+        {
+            ErrorMessage = HttpContext.Session.Get<string>("ErrorMessage") ?? string.Empty;
+            HttpContext.Session.Remove("ErrorMessage");
+        }
     }
 
     public async Task<IActionResult> OnPostCheckoutAsync(int id)
@@ -40,6 +46,12 @@ public class CartModel : PageModel
 
         };
 
+        if (HttpContext.Session.GetString("AuthToken") == null)
+        {
+            HttpContext.Session.Set("ErrorMessage","You must be logged in to submit an order.");
+            return RedirectToPage();
+        }
+
         var response = await _contosoAPI.SubmitOrderAsync(order);
 
         if (!response.IsSuccessStatusCode)
@@ -49,6 +61,8 @@ public class CartModel : PageModel
         }
 
         HttpContext.Session.Remove("OrderItems");
+
+        HttpContext.Session.Set("CartCount", 0);
 
         HttpContext.Session.Set("SuccessMessage", "Order submitted successfully. Thank you!");
 

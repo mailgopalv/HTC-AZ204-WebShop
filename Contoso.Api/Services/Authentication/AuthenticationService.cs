@@ -34,10 +34,11 @@ public class AuthenticationService : IAuthenticationService
         }
     
         var token = await CreateToken(user);
-    
+
         return new LoginDto
         {
             Token = token,
+            UserName = user.Name ?? "User",
         };
     }
 
@@ -71,6 +72,7 @@ public class AuthenticationService : IAuthenticationService
         return new LoginDto
         {
             Token = token,
+            UserName = newUser.Name ?? "User",
         };  
     }
 

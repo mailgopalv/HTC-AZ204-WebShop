@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Refit;
 using System.ComponentModel.DataAnnotations;
+using Contoso.WebApp.Extensions;
 using System.Security.Principal;
 using System.Threading.Tasks;
 
@@ -38,9 +39,12 @@ public class LoginModel : PageModel
             return Page();       
         }
 
-        var token = response.Content.token;
+        string token = response.Content.token;
+        string userName = response.Content.username;
 
         HttpContext.Session.SetString("AuthToken", token);
+
+        HttpContext.Session.SetString("UserName", userName);
         
         // Configure for the Home page
 

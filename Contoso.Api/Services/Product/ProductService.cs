@@ -17,10 +17,24 @@ public class ProductsService : IProductsService
         _mapper = mapper;
     }
 
-    public async Task<IEnumerable<ProductDto>> GetProductsAsync()
+    public async Task<PagedResult<ProductDto>> GetProductsAsync(QueryParameters queryParameters)
     {
-        var products = await _context.Products.ToListAsync();
-        return _mapper.Map<IEnumerable<ProductDto>>(products);
+        var products = await _context.Products
+                            .Where(p =>  p.Category == queryParameters.filterText || string.IsNullOrEmpty(queryParameters.filterText))
+                            .Skip(queryParameters.StartIndex) 
+                            .Take(queryParameters.PageSize)
+                            .ToListAsync();
+
+        var pagedProducts = new PagedResult<ProductDto>
+        {
+            Items = _mapper.Map<List<ProductDto>>(products),
+            TotalCount = await _context.Products.CountAsync(),
+            PageSize = queryParameters.PageSize,
+            PageNumber = queryParameters.PageNumber
+        };
+
+
+        return pagedProducts;
     }
 
     public async Task<ProductDto> GetProductAsync(int id)
@@ -65,5 +79,10 @@ public class ProductsService : IProductsService
         _context.Products.Remove(product);
 
         await _context.SaveChangesAsync();
+    }
+
+    public async Task<List<string>> GetProductCategories()
+    {
+        return await _context.Products.Select(x => x.Category).Distinct().ToListAsync();
     }
 }

@@ -40,7 +40,6 @@ public class ProductModel : PageModel
 
     public async Task<IActionResult> OnPostAddToCart(int id)
     {
-        // Add logic to add product to cart (session storage or something similar)
 
         var response = await _contosoAPI.GetProductAsync(id);
 
@@ -54,8 +53,6 @@ public class ProductModel : PageModel
 
         List<OrderItemDto> orderItems = HttpContext.Session.Get<List<OrderItemDto>>("OrderItems") ?? new List<OrderItemDto>();
 
-        Console.WriteLine("OrderItems: " + orderItems.Count);
-       
         var existingOrderItem = orderItems.FirstOrDefault(oi => oi.ProductId == id);
 
         if (existingOrderItem != null)
@@ -73,9 +70,13 @@ public class ProductModel : PageModel
             });
         }
 
+        int cartCount = HttpContext.Session.Get<int>("CartCount");
+        
         HttpContext.Session.Set("OrderItems", orderItems);
 
         HttpContext.Session.Set("SuccessMessage", "Product added to cart");
+
+        HttpContext.Session.Set("CartCount", cartCount + 1);
 
         return RedirectToPage(new { id });
     }

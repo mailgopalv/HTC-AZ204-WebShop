@@ -18,11 +18,18 @@
 }
 else
 {
+    @if (Model.ErrorMessage != null && Model.SuccessMessage != string.Empty)
+    {
+        <div id="error-message" class="alert alert-danger" role="alert">
+            @Model.ErrorMessage
+        </div>
+    }
     <div class="cart-container">
         <h2 class=cart-title>Shopping Cart</h2>
         <table class="table table-striped">
             <thead>
                 <tr>
+                    <th></th>
                     <th>Product</th>
                     <th>Quantity</th>
                     <th>Price</th>
@@ -32,6 +39,9 @@ else
                 @foreach (var item in Model.OrderItems)
                 {
                     <tr>
+                        <td>
+                            <img src="~/images/product.jpg" alt="Product Image" style="height: 30px; height: 30px;"/>
+                        </td>
                         <td>@item.Product.Name"</td>
                         <td>@item.Quantity</td>
                         <td>@(item.Price * item.Quantity) €</td> 
@@ -40,7 +50,7 @@ else
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="2"><strong>Total:</strong></td>
+                    <td colspan="3"><strong>Total:</strong></td>
                     <td><strong>@(Model.OrderItems.Sum(item => item.Price * item.Quantity)) €</strong></td>
                 </tr>
             </tfoot>
@@ -62,6 +72,13 @@ else
                     successMessage.style.display = 'none';
                     window.location.href = '/Home';
                 }, 2000);
+            }
+
+            var errorMessage = document.getElementById('error-message');
+            if (errorMessage) {
+                setTimeout(function () {
+                    errorMessage.style.display = 'none';
+                }, 1500);
             }
         });
     </script>

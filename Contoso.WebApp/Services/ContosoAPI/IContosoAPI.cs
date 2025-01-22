@@ -1,3 +1,6 @@
+using Contoso.Api.Data;
+using Contoso.WebApp.Data;
+using Microsoft.AspNetCore.Mvc;
 using Refit;
 using static Contoso.WebApp.Pages.Account.LoginModel;
 
@@ -8,13 +11,22 @@ namespace Contoso.WebApp.Services
         [Post("/api/Account/Login")]
         Task<ApiResponse<LoginDto>> LoginAsync(LoginInputModel loginInputModel);
 
-        [Get("/api/Products")]
-        Task<ApiResponse<List<ProductDto>>> GetProductsAsync();
+        [Post("/api/Products")]
+        Task<ApiResponse<PagedResult<ProductDto>>> GetProductsPagedAsync(QueryParameters queryParameters);
+
+        [Get("/api/Products/categories")]
+        Task<ApiResponse<List<string>>> GetCategoriesAsync();
 
         [Get("/api/Products/{id}")]
         Task<ApiResponse<ProductDto>> GetProductAsync(int id);
 
         [Post("/api/Order")]
         Task<ApiResponse<OrderDto>> SubmitOrderAsync(OrderDto orderDto);
+
+        [Get("/api/User")]
+        Task<ApiResponse<UserInfoDto>> GetUserInfoAsync();
+
+        [Put("/api/User")]
+        Task<ApiResponse<IActionResult>> UpdateUserInfoAsync(UserInfoDto userInfoDto);
     }
 }

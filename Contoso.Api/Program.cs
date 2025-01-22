@@ -43,6 +43,7 @@ builder.Services.AddAutoMapper(typeof(MapperConfig));
 builder.Services.AddTransient<IProductsService, ProductsService>();
 builder.Services.AddTransient<IAuthenticationService, AuthenticationService>();
 builder.Services.AddTransient<IOrderService, OrderService>();
+builder.Services.AddTransient<IUserService, UserService>();
 
 // Get connection string for SQL Server
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
