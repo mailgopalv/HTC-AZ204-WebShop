@@ -46,7 +46,11 @@ public class LoginModel : PageModel
 
         HttpContext.Session.SetString("UserName", userName);
         
-        // Configure for the Home page
+        if (userName == "Admin"){
+            HttpContext.Session.SetString("IsAdmin", "true");
+        } else {
+            HttpContext.Session.SetString("IsAdmin", "false");
+        }
 
         return RedirectToPage("/Home/Home");
     }

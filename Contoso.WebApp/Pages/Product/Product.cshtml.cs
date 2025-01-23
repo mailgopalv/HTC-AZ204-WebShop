@@ -14,6 +14,8 @@ public class ProductModel : PageModel
 
     public string SuccessMessage { get; set; }
 
+    public bool isAdmin { get; set; }
+
 
     public ProductModel(IContosoAPI contosoAPI)
     {
@@ -22,6 +24,8 @@ public class ProductModel : PageModel
    
     public async Task OnGetAsync(int id)
     {
+        Console.WriteLine("ProductModel.OnGetAsync");
+        
         var response = await _contosoAPI.GetProductAsync(id);
 
         if (!response.IsSuccessStatusCode)
@@ -36,6 +40,8 @@ public class ProductModel : PageModel
         }
 
         Product = response.Content;
+
+        isAdmin = true;
     }
 
     public async Task<IActionResult> OnPostAddToCart(int id)

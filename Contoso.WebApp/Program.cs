@@ -14,12 +14,15 @@ builder.Services.AddSession();
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddTransient<AuthHandler>();
+builder.Services.AddTransient<LoggingHandler>();
 
 builder.Services.AddHttpClient<IContosoAPI>(client => {
     client.BaseAddress = new Uri("http://localhost:5156");
 })
+// .AddHttpMessageHandler(() => new LoggingHandler())
 .AddHttpMessageHandler<AuthHandler>()
 .AddTypedClient(client => RestService.For<IContosoAPI>(client));
+
 
 var app = builder.Build();
 

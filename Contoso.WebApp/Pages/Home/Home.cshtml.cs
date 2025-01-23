@@ -44,17 +44,9 @@ public class HomeModel : PageModel
             HttpContext.Session.Set("CartCount", 0);
         }
         
-        if (HttpContext.Session.Get<List<string>>("Categories") == null)
-        {
-            var category_response = await _contosoAPI.GetCategoriesAsync();
-            Categories = category_response.Content;
-            HttpContext.Session.Set("Categories", Categories);
-        }
-        else
-        {
-            Categories = HttpContext.Session.Get<List<string>>("Categories");
-        }
-
+        var category_response = await _contosoAPI.GetCategoriesAsync();
+        Categories = category_response.Content;
+    
         bool isCategorySelected = HttpContext.Session.Get<string>("CategorySelected") != null;
         bool isPageSelected = HttpContext.Session.Get<int>("CurrentPage") > 0;
 

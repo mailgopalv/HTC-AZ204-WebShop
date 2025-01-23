@@ -21,17 +21,27 @@
             <h2>@Model.Product.Name</h2>
             <p>@Model.Product.Description</p>
             <p>Price: @Model.Product.Price.ToString("C")</p>
-            <form method="post" asp-page-handler="AddToCart">
-                <input type="hidden" name="productId" value="@Model.Product.Id" />
-                <button type="submit" class="btn btn-success">Add to Cart</button>
-            </form>
+            @if (HttpContext.Session.GetString("IsAdmin") == "true" && HttpContext.Session.GetString("AuthToken") != null)
+            {
+                <a asp-page="/ProductEdit/ProductEdit" asp-route-id="@Model.Product.Id" class="btn btn-primary">Edit</a>
+                <a asp-page="/Product/Delete" asp-route-id="@Model.Product.Id" class="btn btn-danger">Delete</a>
+            }
+            else
+            {
+                <form method="post" asp-page-handler="AddToCart">
+                    <input type="hidden" name="productId" value="@Model.Product.Id" />
+                    <button type="submit" class="btn btn-success">Add to Cart</button>
+                </form>
+            }     
         </div>  
     </div>
-}
+
+}  
 else
 {
     <p>No product found.</p>
 }
+
 
 @section Scripts {
     <script>

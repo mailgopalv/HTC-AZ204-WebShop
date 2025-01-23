@@ -14,6 +14,12 @@ namespace Contoso.WebApp.Services
         [Post("/api/Products")]
         Task<ApiResponse<PagedResult<ProductDto>>> GetProductsPagedAsync(QueryParameters queryParameters);
 
+        [Put("/api/Products")]
+        Task<ApiResponse<IActionResult>> UpdateProductAsync(ProductDto product);
+
+        [Post("/api/Products/create")]
+        Task<ApiResponse<ProductDto>> CreateProductAsync(ProductDto product);
+
         [Get("/api/Products/categories")]
         Task<ApiResponse<List<string>>> GetCategoriesAsync();
 

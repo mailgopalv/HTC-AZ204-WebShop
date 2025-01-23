@@ -25,10 +25,14 @@ public class ProductsService : IProductsService
                             .Take(queryParameters.PageSize)
                             .ToListAsync();
 
+        var totalCount = await _context.Products
+                                        .Where(p =>  p.Category == queryParameters.filterText || string.IsNullOrEmpty(queryParameters.filterText))
+                                        .CountAsync();
+
         var pagedProducts = new PagedResult<ProductDto>
         {
             Items = _mapper.Map<List<ProductDto>>(products),
-            TotalCount = await _context.Products.CountAsync(),
+            TotalCount = totalCount,
             PageSize = queryParameters.PageSize,
             PageNumber = queryParameters.PageNumber
         };
@@ -56,25 +60,33 @@ public class ProductsService : IProductsService
 
     public async Task<ProductDto> UpdateProductAsync(ProductDto product)
     {
-        var isProductExist = await _context.Products.AnyAsync(x => x.Id == product.Id);
+        var existingProduct = await _context.Products.AsNoTracking().FirstAsync(x => x.Id == product.Id);
 
-        if  (!isProductExist)
+        if  (existingProduct == null)
         {
             return null;
         }
 
-        var productModel = _mapper.Map<Product>(product);
+        existingProduct.Name = product.Name;
+        existingProduct.Description = product.Description;
+        existingProduct.Price = product.Price;
+        
+        if (existingProduct.ImageUrl != product.ImageUrl)
+        {
+            existingProduct.ImageUrl = product.ImageUrl;
+        }
 
-        _context.Entry(productModel).State = EntityState.Modified;
+
+        _context.Entry(existingProduct).State = EntityState.Modified;
 
         await _context.SaveChangesAsync();
 
-        return _mapper.Map<ProductDto>(productModel);
+        return _mapper.Map<ProductDto>(existingProduct);
     }
 
     public async Task DeleteProductAsync(int id)
     {
-        var product = await _context.Products.FindAsync(id);
+        var product = await _context.Products.AsNoTracking().FirstAsync(x => x.Id == id);
 
         _context.Products.Remove(product);
 

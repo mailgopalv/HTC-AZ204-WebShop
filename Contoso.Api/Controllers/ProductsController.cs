@@ -36,22 +36,30 @@ public class ProductsController : ControllerBase
     }
 
     [HttpPost("create")]
+    [Authorize]
     public async Task<ProductDto> CreateProductAsync(ProductDto product)
     {
         return await _productService.CreateProductAsync(product);
     }
 
 
-    [HttpPut("{id}")]
-    public async Task<ProductDto> UpdateProductAsync(int id, ProductDto product)
+    [HttpPut]
+    [Authorize]
+    public async Task<IActionResult> UpdateProductAsync(ProductDto product)
     {
-        product.Id = id;
-        return await _productService.UpdateProductAsync(product);
+        var updatedProduct = await _productService.UpdateProductAsync(product);
+
+        if (updatedProduct == null)
+        {
+            return BadRequest("Product not found");
+        }
+
+        return Ok(updatedProduct);
     }
 
 
-    // Make check if product with id exists
     [HttpDelete("{id}")]
+    [Authorize]
     public async Task DeleteProductAsync(int id)
     {
         await _productService.DeleteProductAsync(id);
