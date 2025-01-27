@@ -22,7 +22,7 @@ public class HomeModel : PageModel
 
     public int TotalPages { get; set; }
 
-    public int PageSize { get; set; } = 2;
+    public int PageSize { get; set; } = 3;
 
     public string CategorySelected { get; set; } = "";
 

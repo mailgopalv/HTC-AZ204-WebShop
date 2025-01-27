@@ -17,7 +17,7 @@ builder.Services.AddTransient<AuthHandler>();
 builder.Services.AddTransient<LoggingHandler>();
 
 builder.Services.AddHttpClient<IContosoAPI>(client => {
-    client.BaseAddress = new Uri("http://localhost:5156");
+    client.BaseAddress = new Uri(builder.Configuration["BackendUrl"]);
 })
 // .AddHttpMessageHandler(() => new LoggingHandler())
 .AddHttpMessageHandler<AuthHandler>()
