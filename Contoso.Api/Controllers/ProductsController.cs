@@ -57,6 +57,18 @@ public class ProductsController : ControllerBase
         return Ok(updatedProduct);
     }
 
+    [HttpPost("upload/images")]
+    [Authorize]
+    public async Task<IActionResult> GetUploadBlobUrl([FromBody] List<ProductImageDto> productImage)
+    {
+        
+         ///////////////////////
+        //// YOUR CODE HERE ///
+       ///////////////////////
+       
+       return  BadRequest();
+    }
+
 
     [HttpDelete("{id}")]
     [Authorize]

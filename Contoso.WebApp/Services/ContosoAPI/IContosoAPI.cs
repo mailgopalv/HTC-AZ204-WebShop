@@ -8,23 +8,29 @@ namespace Contoso.WebApp.Services
 {
     public interface IContosoAPI
     {
+        
         [Post("/api/Account/Login")]
         Task<ApiResponse<LoginDto>> LoginAsync(LoginInputModel loginInputModel);
 
         [Post("/api/Products")]
         Task<ApiResponse<PagedResult<ProductDto>>> GetProductsPagedAsync(QueryParameters queryParameters);
 
-        [Put("/api/Products")]
-        Task<ApiResponse<IActionResult>> UpdateProductAsync(ProductDto product);
+        [Get("/api/Products/{id}")]
+        Task<ApiResponse<ProductDto>> GetProductAsync(int id);
 
         [Post("/api/Products/create")]
         Task<ApiResponse<ProductDto>> CreateProductAsync(ProductDto product);
 
+        [Put("/api/Products")]
+        Task<ApiResponse<IActionResult>> UpdateProductAsync(ProductDto product);
+
+        [Post("/api/Products/upload/images")]
+        Task<ApiResponse<IActionResult>> UploadImagesAsync(List<ProductImageDto> productImages);
+
         [Get("/api/Products/categories")]
         Task<ApiResponse<List<string>>> GetCategoriesAsync();
 
-        [Get("/api/Products/{id}")]
-        Task<ApiResponse<ProductDto>> GetProductAsync(int id);
+        
 
         [Post("/api/Order")]
         Task<ApiResponse<OrderDto>> SubmitOrderAsync(OrderDto orderDto);

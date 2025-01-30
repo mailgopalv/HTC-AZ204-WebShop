@@ -64,7 +64,7 @@ public class HomeModel : PageModel
         var pagedProducts = GetPagedFilteredProduct(CurrentPage, CategorySelected);
 
         Products = pagedProducts.Result.Items;
-        TotalPages = pagedProducts.Result.TotalCount / pagedProducts.Result.PageSize;
+        TotalPages = (int)Math.Ceiling((double)pagedProducts.Result.TotalCount / pagedProducts.Result.PageSize);
 
     }
 
@@ -87,6 +87,40 @@ public class HomeModel : PageModel
         HttpContext.Session.Set("CurrentPage", 1);
 
         Console.WriteLine("CategorySelected: " + category);
+
+        return RedirectToPage();
+    }
+
+    public async Task<IActionResult> OnGetUploadImagesAsync()
+    {
+         var imagesPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
+        var imageFiles = Directory.GetFiles(imagesPath);
+        var productImages = new List<ProductImageDto>();
+
+        foreach (var imageFile in imageFiles)
+        {
+            var imageName = Path.GetFileName(imageFile);
+            var imageData = await System.IO.File.ReadAllBytesAsync(imageFile);
+
+            var productImage = new ProductImageDto
+            {
+                ImageUrl = imageName,
+                Image = imageData
+            };
+
+            productImages.Add(productImage);
+        }
+
+        var response = await _contosoAPI.UploadImagesAsync(productImages);
+
+        if (response.IsSuccessStatusCode)
+        {
+            TempData["SuccessMessage"] = "Images uploaded successfully";
+        }
+        else
+        {
+            TempData["ErrorMessage"] = "Error uploading images";
+        }
 
         return RedirectToPage();
     }
