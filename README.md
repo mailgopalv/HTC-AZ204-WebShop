@@ -4,46 +4,11 @@ A SmartWebShop application built with ASP .NET Technology. The frontend is an AS
 
 ## Table of Contents
 
-- [Installation](#installation)
-- [Usage](#usage)
+
 - [Frontend Screens](#frontend-screens)
 - [Backend API](#backend-api)
-- [Setting up User Secrets](#setting-up-user-secrets)
+- [Usage](#usage)
 
-
-## Installation
-
-Instructions on how to install and set up the project.
-
-```bash
-
-# Install frontend dependencies
-cd Contoso.WebApp
-dotnet build
-
-# Navigate to the backend directory
-cd ../Contoso.Api
-
-# Build the backend project
-dotnet build
-
-# Run the database using docker-compose
-docker-compose up -d
-```
-
-## Usage
-
-Instructions on how to use the project.
-
-```bash
-# Run the frontend project
-cd Contoso.WebApp
-dotnet run
-
-# Run the backend project
-cd ../Contoso.Api
-dotnet run
-```
 
 ## Frontend Screens
 
@@ -61,7 +26,7 @@ he API has the following controllers:
 - `/api/Product` - CRUD for products
 - `/api/Account` - Login, Register
 
-## Setting up User Secrets
+### Setting up User Secrets
 
 To securely store sensitive information such as connection strings, you can use the `dotnet user-secrets` tool. Follow the steps below to set up user secrets for the project:
 
@@ -84,6 +49,20 @@ To securely store sensitive information such as connection strings, you can use 
     ```
 
 By using user secrets, you ensure that sensitive information is not hard-coded in your source code and is kept secure.
+
+## Usage
+
+Instructions on how to use the project.
+
+```bash
+# Run the frontend project
+cd Contoso.WebApp
+dotnet run
+
+# Run the backend project
+cd ../Contoso.Api
+dotnet run
+```
 
 
 

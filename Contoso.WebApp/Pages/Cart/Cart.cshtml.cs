@@ -69,6 +69,42 @@ public class CartModel : PageModel
         return RedirectToPage();
     }
 
+
+    // Helper method to get the thumbnail URL
+    // Use this method in the challenge with Azure Functions
+    public string GetProductThumbnaillUrl(string imageUrl)
+    {
+        // Parse the URL
+        Uri uri = new Uri(imageUrl);
+        string[] segments = uri.Segments;
+
+        // Change the path to include "resized" folder
+
+        if (segments.Length > 1)
+        {
+            segments[1] = segments[1].TrimEnd('/') + "resized/";
+        }
+
+        // Replace the image name with "_thumb" suffix
+        string lastSegment = segments[segments.Length - 1];
+
+        string extension = System.IO.Path.GetExtension(lastSegment);
+        if (!string.IsNullOrEmpty(extension))
+        {
+            segments[segments.Length - 1] = lastSegment.Replace(extension, $"_thumb{extension}");
+        }
+
+
+        // Reconstruct the URL
+        string newPath = string.Join("", segments);
+        UriBuilder uriBuilder = new UriBuilder(uri)
+        {
+            Path = newPath
+        };
+
+        return uriBuilder.Uri.ToString();
+    }
+
     private void LoadOrderItemsFromSession()
     {
         OrderItems = HttpContext.Session.Get<List<OrderItemDto>>("OrderItems");
