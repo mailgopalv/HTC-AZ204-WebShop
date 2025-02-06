@@ -21,6 +21,9 @@ namespace Contoso.WebApp.Services
         [Post("/api/Products/create")]
         Task<ApiResponse<ProductDto>> CreateProductAsync(ProductDto product);
 
+        [Post("/api/Products/create/bulk")] 
+        Task<ApiResponse<IActionResult>> CreateProductsAsync();
+
         [Put("/api/Products")]
         Task<ApiResponse<IActionResult>> UpdateProductAsync(ProductDto product);
 

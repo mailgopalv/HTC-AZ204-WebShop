@@ -125,6 +125,22 @@ public class HomeModel : PageModel
         return RedirectToPage();
     }
 
+    public async Task<IActionResult> OnGetBulkUploadProducts()
+    {
+        var response = await _contosoAPI.CreateProductsAsync();
+
+        if (response.IsSuccessStatusCode)
+        {
+            TempData["SuccessMessage"] = "Product Bulk uploaded was successfull";
+        }
+        else
+        {
+            TempData["ErrorMessage"] = "Error bulk uploading products";
+        }
+        
+        return RedirectToPage();
+    }
+
     private async Task<PagedResult<ProductDto>> GetPagedFilteredProduct(int pageNumber, string category)
     {
         var productResponse = await _contosoAPI.GetProductsPagedAsync(new QueryParameters
