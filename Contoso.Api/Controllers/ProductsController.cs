@@ -57,7 +57,6 @@ public class ProductsController : ControllerBase
         return Ok(updatedProduct);
     }
 
-    
 
     [HttpPost("upload/images")]
     [Authorize]

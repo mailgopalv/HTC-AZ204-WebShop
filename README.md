@@ -8,6 +8,7 @@ A SmartWebShop application built with ASP .NET Technology. The frontend is an AS
 - [Frontend Screens](#frontend-screens)
 - [Backend API](#backend-api)
 - [Usage](#usage)
+- [Data Migration Tool](#data-migration-tool)
 
 
 ## Frontend Screens
@@ -61,6 +62,34 @@ dotnet run
 
 # Run the backend project
 cd ../Contoso.Api
+dotnet run
+```
+
+## Data Migration Tool
+
+This console application migrates data from a SQL Server database to Azure Cosmos DB. Follow the steps below to set it up and use it:
+
+**Note:** The tool assumes that Cosmos DB containers are named `Users`, `Products`, and `Orders`.
+
+### Setup
+
+1. **Navigate to the Application Directory**
+
+    Open your terminal and navigate to the application directory:
+
+    ```bash
+    cd Contoso.DataMigrationTool
+    ```
+
+2. **Configure Environment Variables**
+
+    Update the `appsettings.json` file with your Azure SQL and Azure Cosmos DB connection details. Replace the placeholders with actual values:
+
+### Usage
+
+Run the console application:
+
+```bash
 dotnet run
 ```
 
