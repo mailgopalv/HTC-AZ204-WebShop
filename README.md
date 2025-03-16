@@ -46,7 +46,7 @@ To securely store sensitive information such as connection strings, you can use 
 3. Set the connection string as a user secret:
 
     ```bash
-    dotnet user-secrets set "ConnectionStrings:DefaultConnection" "YOUR_CONNECTION_STRING_FOR_SQL_SERVER"
+    dotnet user-secrets set "ConnectionStrings:ContosoDBConnection" "YOUR_CONNECTION_STRING_FOR_SQL_SERVER"
     ```
 
 By using user secrets, you ensure that sensitive information is not hard-coded in your source code and is kept secure.

@@ -70,8 +70,8 @@ public class CartModel : PageModel
     }
 
 
-    // Helper method to get the thumbnail URL
-    // Use this method in the challenge with Azure Functions
+    // Helper method to get the Product Thumbnail URL FROM the image URL
+    // Use this method in the challenge 3 with Azure Functions
     public string GetProductThumbnaillUrl(string imageUrl)
     {
         // Parse the URL
@@ -82,7 +82,7 @@ public class CartModel : PageModel
 
         if (segments.Length > 1)
         {
-            segments[1] = segments[1].TrimEnd('/') + "resized/";
+            segments[1] =  "resize-" + segments[1];
         }
 
         // Replace the image name with "_thumb" suffix
@@ -93,7 +93,6 @@ public class CartModel : PageModel
         {
             segments[segments.Length - 1] = lastSegment.Replace(extension, $"_thumb{extension}");
         }
-
 
         // Reconstruct the URL
         string newPath = string.Join("", segments);
