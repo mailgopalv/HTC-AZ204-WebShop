@@ -1,3 +1,8 @@
 .DS_Store
 /.vs
 /Contoso.Api/.vscode
+/Contoso.Database/products
+/Contoso.FileUploaderConsole/.vs/Contoso.FileUploaderConsole/CopilotIndices/17.12.38.29086
+/Contoso.FileUploaderConsole/.vs/Contoso.FileUploaderConsole
+/Contoso.FileUploaderConsole/Contoso.FileUploaderConsole/bin/Debug/net8.0
+/Contoso.FileUploaderConsole/Contoso.FileUploaderConsole/obj
