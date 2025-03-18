@@ -19,6 +19,7 @@ public class ProductsController : ControllerBase
     {
         _sasUrl = "https://sasmartwebshopteam1.blob.core.windows.net/?sv=2022-11-02&ss=bfqt&srt=sco&sp=rwdlacupiytfx&se=2025-03-27T21:53:50Z&st=2025-03-18T13:53:50Z&spr=https,http&sig=SVT3rK38Kn4dXdZv%2FEk79cswik2H0Z3ZrCqotvpUPQE%3D";
         _containerName = "products";
+        _productService = productService;
     }
 
     [HttpPost]
