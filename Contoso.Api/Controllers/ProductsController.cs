@@ -64,7 +64,7 @@ public class ProductsController : ControllerBase
                 }
 
                 // Step 3: Set the image URL for the product
-                var imageUrl = blobClient.Uri.AbsolutePath.ToString();
+                var imageUrl = blobClient.Uri.GetLeftPart(UriPartial.Path).ToString();
                 product.ImageUrl = imageUrl; // Assuming ImageUrl is a property of the ProductDto
             }
         }

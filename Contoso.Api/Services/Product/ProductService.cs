@@ -82,7 +82,7 @@ public class ProductsService : IProductsService
 
         foreach(var item in products)
         {
-            item.ImageUrl = $"{_storageUrl}{item.ImageUrl}?{_sasToken}";
+            item.ImageUrl = $"{item.ImageUrl}?{_sasToken}";
             var date = await GetBlobMetadataAsync(item.ImageUrl);
             if (!string.IsNullOrEmpty(date))
             {
