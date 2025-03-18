@@ -42,13 +42,13 @@
             </div>
             <div class="col-md-4 text-end">
                 <a asp-page="/ProductCreate/ProductCreate" class="btn btn-success">Create Product</a>
-                
+
             </div>
         </div>
     } else {
         <h2 class="title">Products</h2>
     }
-    
+
     @if (Model.Products != null && Model.Products.Any())
     {
         <div class="product-grid">
@@ -58,7 +58,11 @@
                     <h3>@product.Name</h3> 
                     @if (!string.IsNullOrEmpty(product.ImageUrl))
                     {
-                        <img src="~/images/@product.ImageUrl" alt="@product.Name" class="product-image"/>
+                        <img src="@product.ImageUrl" style="" alt="@product.Name" class="product-image"/>
+                    }
+                    else
+                    {
+                        <img src="~/images/comingsoon1.jpg" style="" alt="@product.Name" class="product-image" />
                     }
                     <p>Price: @product.Price.ToString("C")</p>
                     <form method="post" asp-page-handler="ImageClick">
