@@ -47,6 +47,7 @@ builder.Services.AddTransient<IUserService, UserService>();
 
 // Get connection string for SQL Server
 var connectionString = builder.Configuration.GetConnectionString("ContosoDBConnection");
+Console.WriteLine($"Connection String: {connectionString}");
 
 // Add DbContext
 builder.Services.AddDbContext<ContosoDbContext>(options =>
