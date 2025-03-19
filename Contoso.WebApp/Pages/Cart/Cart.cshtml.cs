@@ -13,9 +13,12 @@ public class CartModel : PageModel
 
     public string SuccessMessage { get; set; }
 
+    private readonly string _sasToken;
+
     public CartModel(IContosoAPI contosoAPI)
     {
         _contosoAPI = contosoAPI;
+        _sasToken = "sp=r&st=2025-03-19T15:15:01Z&se=2025-03-28T23:15:01Z&sv=2022-11-02&sr=c&sig=h9FIOlVV34mxyB5Nr3L0QcH1DFquW1QHQbSaB%2Bf67SU%3D";
     }
    
     public async Task OnGetAsync()
@@ -82,7 +85,7 @@ public class CartModel : PageModel
 
         if (segments.Length > 1)
         {
-            segments[1] =  "resize-" + segments[1];
+            segments[1] =  "resized-" + segments[1];
         }
 
         // Replace the image name with "_thumb" suffix
@@ -107,6 +110,15 @@ public class CartModel : PageModel
     private void LoadOrderItemsFromSession()
     {
         OrderItems = HttpContext.Session.Get<List<OrderItemDto>>("OrderItems");
+        foreach(var item in OrderItems)
+        {
+            if(item.Product != null && !string.IsNullOrEmpty(item.Product.ImageUrl))
+            {
+                var currUrl = GetProductThumbnaillUrl(item.Product.ImageUrl);
+                item.Product.ImageUrl = $"{currUrl}?{_sasToken}";
+            }
+        }
+
         if (OrderItems == null)
         {
             OrderItems = new List<OrderItemDto>();
