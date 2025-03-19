@@ -30,23 +30,23 @@ public class ProductsService : IProductsService
 
     public async Task<string> GetBlobMetadataAsync(string blobName)
     {
-        if (string.IsNullOrEmpty(blobName))
-            return string.Empty;
-
-        // Create a BlobServiceClient
-        var blobServiceClient = new BlobServiceClient(new Uri(_sasUrl));
-
-        // Get the container client
-        var containerClient = blobServiceClient.GetBlobContainerClient(_containerName);
-
-        var blobsList = containerClient.GetBlobsAsync().ToBlockingEnumerable().ToList();
-        // Get the blob client
-        var blobClient = containerClient.GetBlobClient(Path.GetFileName((new Uri(blobName)).AbsolutePath));
-
-        if(!await blobClient.ExistsAsync())
-            return DateTime.Now.ToString();
         try
         {
+            if (string.IsNullOrEmpty(blobName))
+            return string.Empty;
+
+            // Create a BlobServiceClient
+            var blobServiceClient = new BlobServiceClient(new Uri(_sasUrl));
+
+            // Get the container client
+            var containerClient = blobServiceClient.GetBlobContainerClient(_containerName);
+
+            var blobsList = containerClient.GetBlobsAsync().ToBlockingEnumerable().ToList();
+            // Get the blob client
+            var blobClient = containerClient.GetBlobClient(Path.GetFileName((new Uri(blobName)).AbsolutePath));
+
+            if(!await blobClient.ExistsAsync())
+                return DateTime.Now.ToString();
             var key = "ReleaseDate";
             // Fetch the blob's metadata
             var blobProperties = await blobClient.GetPropertiesAsync();
@@ -76,7 +76,7 @@ public class ProductsService : IProductsService
 
         var products = await _context.Products
                             .Where(p =>  p.Category == queryParameters.filterText || string.IsNullOrEmpty(queryParameters.filterText))
-                            .Skip(queryParameters.StartIndex) 
+                            .Skip(queryParameters.StartIndex)
                             .Take(queryParameters.PageSize)
                             .ToListAsync();
 
